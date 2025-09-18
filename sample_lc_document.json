@@ -1,0 +1,25 @@
+{
+  "document_id": "LC-TEST-001",
+  "applicant": "ABC Trading Company Ltd",
+  "beneficiary": "XYZ Exports Ltd",
+  "amount": "100000.00",
+  "currency": "USD",
+  "expiry_date": "2024-12-31",
+  "shipment_date": "2024-12-15",
+  "presentation_date": "2024-12-20",
+  "latest_shipment_date": "2024-12-30",
+  "documents": [
+    "Commercial Invoice",
+    "Bill of Lading",
+    "Insurance Certificate",
+    "Certificate of Origin"
+  ],
+  "terms": [
+    "CIF New York",
+    "Partial shipments allowed",
+    "Transshipment allowed"
+  ],
+  "description_of_goods": "Cotton T-shirts, 100% cotton, various sizes",
+  "port_of_loading": "Mumbai, India",
+  "port_of_discharge": "New York, USA"
+}
