@@ -1,9 +1,8 @@
 from sqlalchemy import Column, Integer, String, Text, DateTime, Enum
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.sql import func
+from sqlalchemy.orm import relationship
+from app.db import Base
 import enum
-
-Base = declarative_base()
 
 class RuleType(enum.Enum):
     CODABLE = "codable"

@@ -1,6 +1,5 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, Session
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker, Session, DeclarativeBase
 import os
 import logging
 from dotenv import load_dotenv
@@ -40,7 +39,10 @@ except Exception as e:
     raise
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-Base = declarative_base()
+
+# Modern SQLAlchemy 2.0 style Base class
+class Base(DeclarativeBase):
+    pass
 
 def get_db() -> Session:
     """

@@ -1,10 +1,8 @@
 from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, Enum
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
+from app.db import Base
 import enum
-
-Base = declarative_base()
 
 class ValidationStatus(enum.Enum):
     PASS = "pass"
@@ -23,4 +21,4 @@ class Validation(Base):
     timestamp = Column(DateTime(timezone=True), server_default=func.now())
 
     # Relationship to Rule model
-    rule = relationship("Rule", backref="validations")
+    rule = relationship("Rule", back_populates="validations")
