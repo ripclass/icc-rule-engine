@@ -6,12 +6,14 @@ import os
 import logging
 
 logger = logging.getLogger(__name__)
-router = APIRouter(prefix="/health", tags=["health"])
+router = APIRouter(tags=["health"])
 
-@router.get("/")
+@router.get("/health", include_in_schema=False)
+@router.get("/health/", include_in_schema=False)
 async def health_check():
     """
     Basic health check endpoint - always returns OK for load balancer
+    Handles both /health and /health/ to avoid redirects
     """
     return {
         "status": "ok",
@@ -19,7 +21,7 @@ async def health_check():
         "version": "1.0.0"
     }
 
-@router.get("/detailed")
+@router.get("/health/detailed")
 async def detailed_health_check():
     """
     Detailed health check including database and external services
