@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: icc-rule-engine
+    env: python
+    buildCommand: "pip install --upgrade pip && pip install -r requirements.txt"
+    startCommand: "uvicorn app.main:app --host 0.0.0.0 --port $PORT"
+    plan: starter
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+    autoDeploy: true
+    region: oregon
