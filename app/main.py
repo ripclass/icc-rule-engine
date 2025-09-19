@@ -120,7 +120,7 @@ async def global_exception_handler(request: Request, exc: Exception):
     )
 
 if __name__ == "__main__":
-    # For local development
+    # For local development - SQLAlchemy 2.0 compatible
     port = int(os.getenv("PORT", 8000))
     uvicorn.run(
         "app.main:app",
