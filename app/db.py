@@ -22,10 +22,11 @@ if DATABASE_URL and DATABASE_URL.startswith("postgres://"):
 
 # Add SSL mode for production databases if not already present
 if DATABASE_URL and "sslmode=" not in DATABASE_URL and not DATABASE_URL.startswith("sqlite"):
+    # Use connection pooling for Supabase compatibility
     if "?" in DATABASE_URL:
-        DATABASE_URL += "&sslmode=require"
+        DATABASE_URL += "&sslmode=require&pgbouncer=true"
     else:
-        DATABASE_URL += "?sslmode=require"
+        DATABASE_URL += "?sslmode=require&pgbouncer=true"
 
 # Create engine with production-ready settings
 try:
