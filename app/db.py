@@ -16,6 +16,10 @@ DATABASE_URL = os.getenv(
     "postgresql://postgres:password@localhost:5432/icc_rules"
 )
 
+# Render.com provides DATABASE_URL starting with postgres:// but SQLAlchemy 2.0 expects postgresql://
+if DATABASE_URL and DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+
 # Add SSL mode for production databases if not already present
 if DATABASE_URL and "sslmode=" not in DATABASE_URL and not DATABASE_URL.startswith("sqlite"):
     if "?" in DATABASE_URL:
@@ -92,9 +96,18 @@ def test_connection():
     try:
         from sqlalchemy import text
         with engine.connect() as connection:
-            connection.execute(text("SELECT 1"))
+            result = connection.execute(text("SELECT 1"))
+            result.fetchone()  # Ensure the query actually executes
         logger.info("Database connection test successful")
         return True
     except Exception as e:
         logger.error(f"Database connection test failed: {e}")
-        return False
+        # Try alternative approach for compatibility
+        try:
+            with engine.connect() as connection:
+                connection.exec_driver_sql("SELECT 1")
+            logger.info("Database connection test successful (fallback method)")
+            return True
+        except Exception as e2:
+            logger.error(f"Database connection test failed (fallback): {e2}")
+            return False
