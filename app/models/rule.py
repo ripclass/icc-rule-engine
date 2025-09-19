@@ -22,3 +22,6 @@ class Rule(Base):
     version = Column(String(20), default="1.0")
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+
+    # Relationship to Validation model
+    validations = relationship("Validation", back_populates="rule")
